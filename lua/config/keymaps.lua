@@ -92,3 +92,8 @@ wk.add {
 
 -- [[ GitSigns ]]
 -- See `plugins.gitsigns.lua` for installed keymaps
+
+-- [[ Autoformat ]]
+vim.keymap.set('n', '<leader>f', function()
+  require('conform').format { async = true }
+end, { desc = '[F]ormat buffer' })
