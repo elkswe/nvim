@@ -25,7 +25,7 @@ return {
   config = function()
     local lsp_config = require 'config.lsp'
 
-    local mason_servers = vim.tbl_keys(lsp_config.servers) or {}
+    local mason_servers = lsp_config.servers or {}
     local mason_formatters = vim.iter(vim.tbl_values(lsp_config.formatters)):flatten():totable() or {}
 
     local mason_to_install = {}
@@ -36,14 +36,9 @@ return {
     ---@type MasonLspconfigSettings
     local opts = {
       ensure_installed = mason_to_install,
-      automatic_enable = false,
+      automatic_enable = true,
     }
 
     require('mason-lspconfig').setup(opts)
-
-    for server, config in pairs(lsp_config.servers) do
-      vim.lsp.config(server, config)
-      vim.lsp.enable(server)
-    end
   end,
 }
