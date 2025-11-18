@@ -3,10 +3,6 @@
 return {
   'saghen/blink.cmp',
   event = 'VimEnter',
-  -- optional: provides snippets for the snippet source
-  dependencies = {
-    -- 'rafamadriz/friendly-snippets',
-  },
 
   -- use a release tag to download pre-built binaries
   version = '1.*',
@@ -14,6 +10,30 @@ return {
   -- build = 'cargo build --release',
   -- If you use nix, you can build from source using latest nightly rust with:
   -- build = 'nix run .#build-plugin',
+
+  -- optional: provides snippets for the snippet source
+  dependencies = {
+    'L3MON4D3/LuaSnip',
+    -- follow latest release.
+    version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+    dependencies = {
+      -- `friendly-snippets` contains a variety of premade snippets.
+      'rafamadriz/friendly-snippets',
+      config = function()
+        require('luasnip.loaders.from_vscode').lazy_load()
+      end,
+    },
+    build = (function()
+      -- Build Step is needed for regex support in snippets.
+      -- This step is not supported in many windows environments.
+      -- Remove the below condition to re-enable on windows.
+      if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+        return
+      end
+
+      return 'make install_jsregexp'
+    end)(),
+  },
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
@@ -45,7 +65,12 @@ return {
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
+      providers = {
+        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+      },
     },
+
+    snippets = { preset = 'luasnip' },
 
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
     -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
