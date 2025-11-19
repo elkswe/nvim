@@ -36,6 +36,23 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 
+-- How many spaces are shown per <Tab>
+vim.o.tabstop = 4
+-- Amount to indent with << and >>
+vim.o.shiftwidth = 0 -- Same as 'tabstop'
+-- How many spaces are applied when pressing <Tab>
+vim.o.softtabstop = -1 -- Same as 'tabstop'
+
+-- Round indent to multiple of 'shiftwidth'
+vim.o.shiftround = true
+-- Convert tabs to spaces
+vim.o.expandtab = true
+
+vim.o.smarttab = true
+vim.o.smartindent = true
+-- Keep indentation from previous line
+vim.o.autoindent = true
+
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
