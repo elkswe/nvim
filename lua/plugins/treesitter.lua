@@ -1,6 +1,7 @@
 ---@module "lazy"
 ---@type LazySpec
 return {
+  -- Also look for nvim-treesitter/nvim-treesitter-textobjects
   'nvim-treesitter/nvim-treesitter',
   lazy = false,
   branch = 'main',
@@ -38,7 +39,7 @@ return {
           return
         end
 
-        if not (treesitter_attach(buf, language) or vim.tbl_contains(available_parsers, language)) then
+        if not treesitter_attach(buf, language) and not vim.tbl_contains(available_parsers, language) then
           return
         end
 
@@ -51,6 +52,14 @@ return {
             treesitter_attach(buf, language)
           end)
         end
+
+        -- Treesitter Folds
+        vim.wo.foldmethod = 'expr'
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo.foldlevel = 99 -- All folds are open
+
+        -- Treesitter Indentation
+        -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end,
     })
 
@@ -60,6 +69,7 @@ return {
       'cpp',
       'cmake',
       'powershell',
+      'bash',
       'diff',
       'vim',
       'vimdoc',
@@ -69,6 +79,11 @@ return {
       'markdown',
       'markdown_inline',
       'query',
+      'editorconfig',
+      'javascript',
+      'typescript',
+      'json',
+      'pascal',
     }
 
     require('nvim-treesitter').install(parsers)
