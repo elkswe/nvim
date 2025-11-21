@@ -11,6 +11,11 @@ return {
   -- If you use nix, you can build from source using latest nightly rust with:
   -- build = 'nix run .#build-plugin',
 
+  opts_extend = {
+    'sources.completion.enabled_providers',
+    'sources.default',
+  },
+
   -- optional: provides snippets for the snippet source
   dependencies = {
     'L3MON4D3/LuaSnip',
@@ -59,14 +64,40 @@ return {
     },
 
     -- (Default) Only show the documentation popup when manually triggered
-    completion = { documentation = { auto_show = false } },
+    completion = {
+      accept = {
+        auto_brackets = {
+          -- experimental auto-brackets support
+          enabled = true,
+        },
+      },
+      menu = {
+        draw = {
+          treesitter = { 'lsp' },
+        },
+      },
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 200,
+      },
+      ghost_text = {
+        enabled = true,
+      },
+    },
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
+      per_filetype = {
+        lua = { inherit_defaults = true, 'lazydev' },
+      },
       providers = {
-        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        lazydev = {
+          name = 'LazyDev',
+          module = 'lazydev.integrations.blink',
+          score_offset = 100,
+        },
       },
     },
 
@@ -82,5 +113,4 @@ return {
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
   },
-  opts_extend = { 'sources.default' },
 }
