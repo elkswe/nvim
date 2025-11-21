@@ -22,7 +22,7 @@ return {
       }
     end,
 
-    formatters_by_ft = vim.tbl_extend('force', require('config.lsp').formatters, {
+    formatters_by_ft = vim.tbl_extend('force', require('config.lsp').formatters_commands, {
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --

@@ -68,6 +68,7 @@ return {
       'c',
       'cpp',
       'cmake',
+      'python',
       'powershell',
       'bash',
       'diff',

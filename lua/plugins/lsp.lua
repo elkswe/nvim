@@ -26,7 +26,7 @@ return {
     local lsp_config = require 'config.lsp'
 
     local mason_servers = lsp_config.servers or {}
-    local mason_formatters = vim.iter(vim.tbl_values(lsp_config.formatters)):flatten():totable() or {}
+    local mason_formatters = lsp_config.formatters_to_install or {}
 
     local mason_to_install = {}
     vim.list_extend(mason_to_install, mason_servers)
