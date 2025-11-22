@@ -80,13 +80,28 @@ end, { desc = '[S]earch [N]eovim files' })
 local telescope_lazy = require('telescope').extensions.lazy
 vim.keymap.set('n', '<leader>l', telescope_lazy.lazy, { desc = '[L]azy Plugins Browser' })
 
+-- [[ Neo-Tree ]]
+vim.keymap.set('n', '<leader>ef', '<cmd>Neotree filesystem<CR>', { desc = 'Open [F]ilesystem' })
+vim.keymap.set('n', '<leader>eb', '<cmd>Neotree buffers<CR>', { desc = 'Open [B]uffers' })
+vim.keymap.set('n', '<leader>eg', '<cmd>Neotree git_status<CR>', { desc = 'Open [G]it Status' })
+vim.keymap.set('n', '<leader>es', '<cmd>Neotree document_symbols<CR>', { desc = 'Open Document [S]ymbols' })
+
+vim.keymap.set('n', '<leader>epl', '<cmd>Neotree position=left<CR>', { desc = '[L]eft' })
+vim.keymap.set('n', '<leader>ept', '<cmd>Neotree position=top<CR>', { desc = '[T]op' })
+vim.keymap.set('n', '<leader>epr', '<cmd>Neotree position=right<CR>', { desc = '[R]ight' })
+vim.keymap.set('n', '<leader>epb', '<cmd>Neotree position=bottom<CR>', { desc = '[B]ottom' })
+vim.keymap.set('n', '<leader>epf', '<cmd>Neotree position=float<CR>', { desc = '[F]loat' })
+vim.keymap.set('n', '<leader>epc', '<cmd>Neotree position=current<CR>', { desc = '[C]urrent' })
+
 -- [[ Which Key ]]
 -- See `:help which-key.nvim-which-key-mappings`
 
 local wk = require 'which-key'
 wk.add {
-  { '<leader>s', group = '[S]earch' },
-  { '<leader>t', group = '[T]oggle' },
+  { '<leader>s', group = '[S]earch', icon = '' },
+  { '<leader>t', group = '[T]oggle', icon = '' },
+  { '<leader>e', group = '[E]xplorer', icon = '󰥨' },
+  { '<leader>ep', group = '[P]osition', icon = '' },
   { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
 }
 
