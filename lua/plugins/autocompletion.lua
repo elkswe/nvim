@@ -40,6 +40,33 @@ return {
     end)(),
   },
 
+  -- NOTE: Windows Terminal require workaround to enable <C-Space> keymap working
+  -- https://github.com/neovim/neovim/issues/8435
+  -- Edit settings.json file:
+
+  --[[
+   ...
+   "actions":
+    [
+        {
+            "command":
+            {
+                "action": "sendInput",
+                "input": "\u001b[32;5u"
+            },
+            "id": "Terminal.CtrlSpaceWorkaround"
+        }
+    ],
+    ...
+    "keybindings":
+    [
+        {
+            "id": "Terminal.CtrlSpaceWorkaround",
+            "keys": "ctrl+space"
+        },
+    ...
+  ]]
+
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
