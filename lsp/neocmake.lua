@@ -1,6 +1,5 @@
 ---@type vim.lsp.Config
 return {
-  single_file_support = true,
   init_options = {
     format = {
       enable = true,
@@ -19,5 +18,12 @@ return {
         },
       },
     },
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+        relativePatternSupport = true,
+      },
+    },
   },
+  single_file_support = true,
 }
