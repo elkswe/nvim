@@ -18,26 +18,31 @@ return {
 
   -- optional: provides snippets for the snippet source
   dependencies = {
-    'L3MON4D3/LuaSnip',
-    -- follow latest release.
-    version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-    dependencies = {
-      -- `friendly-snippets` contains a variety of premade snippets.
-      'rafamadriz/friendly-snippets',
-      config = function()
-        require('luasnip.loaders.from_vscode').lazy_load()
-      end,
-    },
-    build = (function()
-      -- Build Step is needed for regex support in snippets.
-      -- This step is not supported in many windows environments.
-      -- Remove the below condition to re-enable on windows.
-      if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-        return
-      end
+    'nvim-tree/nvim-web-devicons',
+    'onsails/lspkind.nvim',
+    'xzbdmw/colorful-menu.nvim',
+    {
+      'L3MON4D3/LuaSnip',
+      -- follow latest release.
+      version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      dependencies = {
+        -- `friendly-snippets` contains a variety of premade snippets.
+        'rafamadriz/friendly-snippets',
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load()
+        end,
+      },
+      build = (function()
+        -- Build Step is needed for regex support in snippets.
+        -- This step is not supported in many windows environments.
+        -- Remove the below condition to re-enable on windows.
+        if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+          return
+        end
 
-      return 'make install_jsregexp'
-    end)(),
+        return 'make install_jsregexp'
+      end)(),
+    },
   },
 
   -- NOTE: Windows Terminal require workaround to enable <C-Space> keymap working
@@ -95,7 +100,6 @@ return {
       nerd_font_variant = 'mono',
     },
 
-    -- (Default) Only show the documentation popup when manually triggered
     completion = {
       accept = {
         auto_brackets = {
@@ -106,6 +110,53 @@ return {
       menu = {
         draw = {
           treesitter = { 'lsp' },
+          -- We don't need label_description now because label and label_description are already
+          -- combined together in label by colorful-menu.nvim.
+          columns = { { 'kind_icon' }, { 'label', gap = 1 } },
+          -- https://cmp.saghen.dev/recipes#nvim-web-devicons-lspkind
+          -- https://github.com/Saghen/blink.cmp/discussions/1146
+          components = {
+            -- https://github.com/xzbdmw/colorful-menu.nvim?tab=readme-ov-file#use-it-in-blinkcmp
+            label = {
+              text = function(ctx)
+                return require('colorful-menu').blink_components_text(ctx)
+              end,
+              highlight = function(ctx)
+                return require('colorful-menu').blink_components_highlight(ctx)
+              end,
+            },
+            kind_icon = {
+              text = function(ctx)
+                local icon = ctx.kind_icon
+                if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                  local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                  if dev_icon then
+                    icon = dev_icon
+                  end
+                else
+                  icon = require('lspkind').symbolic(ctx.kind, {
+                    mode = 'symbol',
+                  })
+                end
+
+                return icon .. ctx.icon_gap
+              end,
+
+              -- Optionally, use the highlight groups from nvim-web-devicons
+              -- You can also add the same function for `kind.highlight` if you want to
+              -- keep the highlight groups in sync with the icons.
+              highlight = function(ctx)
+                local hl = ctx.kind_hl
+                if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                  local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
+                  if dev_icon then
+                    hl = dev_hl
+                  end
+                end
+                return hl
+              end,
+            },
+          },
         },
       },
       documentation = {
