@@ -69,6 +69,7 @@ return {
             "id": "Terminal.CtrlSpaceWorkaround",
             "keys": "ctrl+space"
         },
+    ]
     ...
   ]]
 
