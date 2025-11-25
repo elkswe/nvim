@@ -1,14 +1,16 @@
 -- Nerd Font
 vim.g.have_nerd_font = true
 
--- Powershell
-vim.o.shell = vim.fn.executable 'pwsh' and 'pwsh' or 'powershell'
-vim.o.shellcmdflag =
-  "-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering='plaintext';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
-vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
-vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
-vim.o.shellquote = ''
-vim.o.shellxquote = ''
+if vim.fn.has 'win32' then
+  -- Powershell
+  vim.o.shell = vim.fn.executable 'pwsh' and 'pwsh' or 'powershell'
+  vim.o.shellcmdflag =
+    "-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering='plaintext';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
+  vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+  vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+  vim.o.shellquote = ''
+  vim.o.shellxquote = ''
+end
 
 -- Make line numbers default
 vim.o.number = true
