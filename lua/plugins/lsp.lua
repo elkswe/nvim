@@ -4,6 +4,7 @@ return {
   'mason-org/mason-lspconfig.nvim',
   dependencies = {
     { 'mason-org/mason.nvim', opts = {} },
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
     'neovim/nvim-lspconfig',
 
     -- Extensible UI for Neovim notifications and LSP progress messages
@@ -27,15 +28,23 @@ return {
 
     local mason_servers = lsp_config.servers or {}
     local mason_formatters = lsp_config.formatters_to_install or {}
+    local mason_linters = lsp_config.linters_to_install or {}
 
-    local mason_to_install = {}
-    vim.list_extend(mason_to_install, mason_servers)
-    vim.list_extend(mason_to_install, mason_formatters)
+    local mason_tools_to_install = {}
+    vim.list_extend(mason_tools_to_install, mason_formatters)
+    vim.list_extend(mason_tools_to_install, mason_linters)
+
+    require('mason-tool-installer').setup {
+      ensure_installed = mason_tools_to_install,
+    }
+
+    local mason_lsp_to_install = {}
+    vim.list_extend(mason_lsp_to_install, mason_servers)
 
     ---@module 'mason-lspconfig'
     ---@type MasonLspconfigSettings
     local opts = {
-      ensure_installed = mason_to_install,
+      ensure_installed = mason_lsp_to_install,
       automatic_enable = true,
     }
 

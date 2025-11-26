@@ -19,6 +19,10 @@ M.formatters_to_install = {
   'ruff',
 }
 
+M.linters_to_install = {
+  'shellcheck',
+}
+
 M.formatters_commands = {
   lua = { 'stylua' },
   python = { 'ruff_fix', 'ruff_format', 'ruff_organize_imports' },
