@@ -1,9 +1,9 @@
 -- Nerd Font
 vim.g.have_nerd_font = true
 
-if vim.fn.has 'win32' then
+if vim.fn.has 'win32' == 1 then
   -- Powershell
-  vim.o.shell = vim.fn.executable 'pwsh' and 'pwsh' or 'powershell'
+  vim.o.shell = vim.fn.executable 'pwsh' == 1 and 'pwsh' or 'powershell'
   vim.o.shellcmdflag =
     "-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering='plaintext';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
   vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
