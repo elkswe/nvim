@@ -114,3 +114,14 @@ wk.add {
 vim.keymap.set('n', '<leader>f', function()
   require('conform').format { async = true }
 end, { desc = '[F]ormat buffer' })
+
+-- [[ Terminal ]]
+vim.keymap.set('n', '<leader>z', function()
+  vim.cmd 'horizontal botright terminal bash --login'
+  vim.cmd('resize ' .. vim.o.lines / 3)
+end, { desc = '[z] Open Terminal (Bottom)' })
+
+vim.keymap.set('n', '<leader>Z', function()
+  vim.cmd 'vertical botright terminal bash --login'
+  vim.cmd('vertical resize ' .. vim.o.columns / 3)
+end, { desc = '[Z] Open Terminal (Right)' })
