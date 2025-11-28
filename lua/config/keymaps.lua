@@ -104,7 +104,7 @@ wk.add {
   { '<leader>t', group = '[T]oggle', icon = '' },
   { '<leader>e', group = '[E]xplorer', icon = '󰥨' },
   { '<leader>ep', group = '[P]osition', icon = '' },
-  { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+  { '<leader>h', group = 'Git [H]unk', icon = '󰊢', mode = { 'n', 'v' } },
 }
 
 -- [[ GitSigns ]]
