@@ -68,23 +68,30 @@ return {
       'c',
       'cpp',
       'cmake',
+
       'python',
-      'powershell',
-      'bash',
-      'diff',
+      'pascal',
+      'javascript',
+      'typescript',
+      'html',
+
       'vim',
       'vimdoc',
       'lua',
       'luadoc',
-      'html',
+
+      'powershell',
+      'bash',
+
       'markdown',
       'markdown_inline',
-      'query',
+
       'editorconfig',
-      'javascript',
-      'typescript',
+      'query',
+      'diff',
+
       'json',
-      'pascal',
+      'xml',
     }
 
     require('nvim-treesitter').install(parsers)
