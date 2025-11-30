@@ -116,12 +116,14 @@ vim.keymap.set('n', '<leader>f', function()
 end, { desc = '[F]ormat buffer' })
 
 -- [[ Terminal ]]
+local shell_cmd = vim.fn.has 'win32' == 1 and 'pwsh -NoLogo' or 'bash --login'
+
 vim.keymap.set('n', '<leader>z', function()
-  vim.cmd 'horizontal botright terminal bash --login'
+  vim.cmd('horizontal botright terminal ' .. shell_cmd)
   vim.cmd('resize ' .. vim.o.lines / 3)
 end, { desc = '[z] Open Terminal (Bottom)' })
 
 vim.keymap.set('n', '<leader>Z', function()
-  vim.cmd 'vertical botright terminal bash --login'
+  vim.cmd('vertical botright terminal ' .. shell_cmd)
   vim.cmd('vertical resize ' .. vim.o.columns / 3)
 end, { desc = '[Z] Open Terminal (Right)' })
