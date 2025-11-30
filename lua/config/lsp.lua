@@ -17,6 +17,7 @@ M.servers = {
 M.formatters_to_install = {
   'stylua',
   'ruff',
+  'clang-format',
 }
 
 M.linters_to_install = {
@@ -26,6 +27,7 @@ M.linters_to_install = {
 M.formatters_commands = {
   lua = { 'stylua' },
   python = { 'ruff_fix', 'ruff_format', 'ruff_organize_imports' },
+  cpp = { 'clang-format' },
 }
 
 return M
